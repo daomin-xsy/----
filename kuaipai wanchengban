@@ -1,0 +1,114 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+int Swap(int arr[], int low, int high)
+{
+
+    int temp;
+
+    temp = arr[low];
+
+    arr[low] = arr[high];
+
+    arr[high] = temp;
+    
+    return 0;
+}
+int QuickSort(int arr[], int low, int high)
+{
+    int a = low;
+    int b = high;
+    int base = arr[low];
+    if (low >= high)  
+    {
+        return 0;
+    }
+    while (low < high)  
+    {
+        while (low < high && base <= arr[high])
+        {
+            high--;  
+        }
+        if (base > arr[high])
+        {
+            Swap(arr,low ,high);
+            low++;
+        }
+        while (low < high && base >= arr[low])
+        {
+            low++;  
+        }
+        if (base < arr[low])
+        {
+            Swap(arr,low,high);
+            high--;
+        }
+    }
+    QuickSort(arr, a, low-1);  
+    QuickSort(arr, low+1, b); 
+} 
+struct Stu
+	{
+		int index[10];
+		char college[10];
+		char name[10];
+	}Stu[10];
+	struct Referee
+	{
+		char name2[7];
+	 } Referee[7];
+	  
+int main()
+{
+	int n;
+    cin>>n;
+    int arr[n];
+    int i , j;
+    for(i = 0; i < n; i ++)
+    {
+        cin>>arr[i];
+    }
+    QuickSort(arr, 0, n-1);
+    for(j = 0; j < n; j ++)
+    {
+        cout<<arr[j]<<"  ";
+    }
+    ofstream out("C:/Users/海南猪/Desktop/最终排名");
+    ifstream in("C:/Users/海南猪/Desktop/选手信息");
+    ifstream inn("C:/Users/海南猪/Desktop/裁判信息");
+
+    if(in.is_open())
+    {
+    	for(int i=0;i<10;i++)
+    	{
+    		in>>Stu[i].index>>Stu[i].college>>Stu[i].name;
+		}
+
+        in.close();
+
+    }
+    
+    if(inn.is_open())
+    {
+    	for(int i=0;i<10;i++)
+    	{
+    		inn>>Referee[i].name2 ; 
+		}
+
+        inn.close();
+
+    }
+
+    if(out.is_open())
+
+    {
+    	for(int i=0;i<10;i++)
+    	{
+		    out<<Stu[i].index<<Stu[i].college<<Stu[i].name;	
+		}
+        out.close();
+
+    }
+    return 0;
+
+}
